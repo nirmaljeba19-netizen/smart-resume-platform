@@ -1,0 +1,236 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | PulseCV</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="navbar non-print">
+      <div class="container nav-shell">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          <a href="index.html">PulseCV</a>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="login.html">Login</a>
+          <a href="signup.html">Sign up</a>
+        </div>
+        <div class="badge" id="userBadge">Guest mode</div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <div class="topbar non-print">
+        <div>
+          <div class="pill">Dashboard</div>
+          <h1>Resume & Portfolio Studio</h1>
+          <p class="muted">Role-aware presets, ATS-safe structure, and instant PDF export.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="saveDraft" class="btn btn-ghost">Save draft</button>
+          <button id="loadDraft" class="btn btn-ghost">Load draft</button>
+          <button id="exportPdf" class="btn btn-primary">Export PDF</button>
+          <button id="downloadHtml" class="btn btn-ghost">Download HTML</button>
+          <button id="viewLocal" class="btn btn-ghost">View on localhost</button>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <section class="panel non-print">
+          <h2>Builder</h2>
+          <div class="field">
+            <label for="roleSelect">Target role</label>
+            <select id="roleSelect">
+              <option>Frontend Engineer</option>
+              <option>Full-Stack Engineer</option>
+              <option>Data Scientist</option>
+              <option>Machine Learning Engineer</option>
+              <option>Product Manager</option>
+              <option>UX Designer</option>
+              <option>Marketing Manager</option>
+            </select>
+            <p class="hint">Role templates adjust summary, skills, and ATS keywords for that discipline.</p>
+            <div class="card" id="roleHints" style="margin-top: 8px;">
+              <div class="subtext">Role prompts</div>
+              <p class="muted" id="rolePromptText">Choose a role to see suggested impact bullets.</p>
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="field">
+              <label for="nameInput">Full name</label>
+              <input id="nameInput" placeholder="Alex Rivera" />
+            </div>
+            <div class="field">
+              <label for="photoInput">Profile photo (optional)</label>
+              <input id="photoInput" type="file" accept="image/*" />
+              <p class="hint">Stored locally and embedded in downloads.</p>
+            </div>
+            <div class="field">
+              <label for="titleInput">Headline</label>
+              <input id="titleInput" placeholder="Senior Frontend Engineer" />
+            </div>
+            <div class="field">
+              <label for="locationInput">Location</label>
+              <input id="locationInput" placeholder="Austin, TX | Remote-ready" />
+            </div>
+            <div class="field">
+              <label for="emailInput">Email</label>
+              <input id="emailInput" type="email" placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label for="phoneInput">Phone</label>
+              <input id="phoneInput" placeholder="+1 (555) 123-4567" />
+            </div>
+            <div class="field">
+              <label for="websiteInput">Portfolio / LinkedIn</label>
+              <input id="websiteInput" placeholder="linkedin.com/in/you" />
+            </div>
+            <div class="field">
+              <label for="portfolioInput">Portfolio site</label>
+              <input id="portfolioInput" placeholder="https://yourportfolio.com" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="summaryInput">Summary</label>
+            <textarea id="summaryInput" placeholder="Impact-focused summary aligned to target role."></textarea>
+          </div>
+
+          <div class="field">
+            <label>Skills / stack (press Enter)</label>
+            <div class="chip-row" id="skillsChips"></div>
+            <input id="skillsInput" placeholder="Type a skill and press Enter" />
+          </div>
+
+          <div class="field">
+            <label>Role keywords (for ATS)</label>
+            <div class="chip-row" id="keywordChips"></div>
+            <input id="keywordInput" placeholder="Add keywords like 'accessibility', 'A/B testing'" />
+          </div>
+
+          <h3>Experience</h3>
+          <div class="two-col">
+            <div class="field">
+              <label for="expCompany">Company</label>
+              <input id="expCompany" placeholder="Nimbus Labs" />
+            </div>
+            <div class="field">
+              <label for="expTitle">Title</label>
+              <input id="expTitle" placeholder="Frontend Lead" />
+            </div>
+            <div class="field">
+              <label for="expPeriod">Period</label>
+              <input id="expPeriod" placeholder="2022 â€“ Present" />
+            </div>
+            <div class="field">
+              <label for="expImpact">Impact / metrics</label>
+              <textarea id="expImpact" placeholder="Drove +18% activation by rebuilding onboarding..."></textarea>
+            </div>
+          </div>
+          <button id="addExperience" class="btn btn-ghost" type="button">Add experience</button>
+          <div class="list" id="experienceList"></div>
+
+          <div class="divider"></div>
+          <h3>Portfolio</h3>
+          <div class="two-col">
+            <div class="field">
+              <label for="projTitle">Project / case study</label>
+              <input id="projTitle" placeholder="Design system revamp" />
+            </div>
+            <div class="field">
+              <label for="projLink">Link</label>
+              <input id="projLink" placeholder="https://yourproject.com" />
+            </div>
+            <div class="field">
+              <label for="projStack">Stack / tools</label>
+              <input id="projStack" placeholder="React, Storybook, Figma" />
+            </div>
+            <div class="field">
+              <label for="projOutcome">Outcome</label>
+              <textarea id="projOutcome" placeholder="Cut UI defects by 23%, reduced build time by 18%..."></textarea>
+            </div>
+          </div>
+          <button id="addProject" class="btn btn-ghost" type="button">Add project</button>
+          <div class="list" id="projectList"></div>
+
+          <div class="divider"></div>
+          <h3>Education (optional)</h3>
+          <div class="two-col">
+            <div class="field">
+              <label for="eduSchool">School</label>
+              <input id="eduSchool" placeholder="Georgia Tech" />
+            </div>
+            <div class="field">
+              <label for="eduDegree">Degree</label>
+              <input id="eduDegree" placeholder="B.S. Computer Science, 2020" />
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="resume-card" id="exportArea">
+            <div class="resume-header">
+              <div>
+                <h2 id="previewName">Your Name</h2>
+                <div class="subtext" id="previewTitle">Role headline</div>
+              </div>
+              <div class="avatar" id="previewPhoto" aria-label="Profile photo"></div>
+              <div class="stack subtext" style="text-align: right;">
+                <span id="previewLocation">Location</span>
+                <span id="previewContact">email | phone | site</span>
+                <span id="previewPortfolio" class="muted"></span>
+              </div>
+            </div>
+
+            <div class="stack">
+              <div>
+                <div class="section-title">Summary</div>
+                <p id="previewSummary" class="muted">Concise, role-aware summary goes here.</p>
+              </div>
+
+              <div>
+                <div class="section-title">Skills</div>
+                <div class="chip-row" id="previewSkills"></div>
+              </div>
+
+              <div>
+                <div class="section-title">Experience</div>
+                <div class="list" id="previewExperience"></div>
+              </div>
+
+              <div>
+                <div class="section-title">Portfolio</div>
+                <div class="list" id="previewProjects"></div>
+              </div>
+
+              <div>
+                <div class="section-title">Education</div>
+                <p id="previewEducation" class="muted">Add your education.</p>
+              </div>
+
+              <div>
+                <div class="section-title">ATS Keywords</div>
+                <div class="chip-row" id="previewKeywords"></div>
+                <p class="ats-note">
+                  Plain text, no tables, web-safe fonts. Keep numbers, verbs, and nouns near each other for parsers.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-actions non-print" style="margin-top: 14px;">
+            <button id="copyATS" class="btn btn-ghost" type="button">Copy ATS text</button>
+            <button id="clearData" class="btn btn-text" type="button">Reset</button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>
+

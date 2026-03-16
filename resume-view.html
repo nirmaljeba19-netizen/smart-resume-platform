@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Preview | PulseCV</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container" style="padding: 30px 0 60px;">
+      <div class="topbar">
+        <div>
+          <div class="pill">Local preview</div>
+          <h1>Your saved resume</h1>
+          <p class="muted">This view reads your latest saved draft from localStorage.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-ghost" href="dashboard.html">Back to builder</a>
+          <button class="btn btn-primary" onclick="window.print()">Export PDF</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="resume-card" id="previewCard">
+          <div class="resume-header">
+            <div>
+              <h2 id="pvName">Your Name</h2>
+              <div class="subtext" id="pvTitle">Role headline</div>
+            </div>
+            <div class="avatar" id="pvPhoto" aria-label="Profile photo"></div>
+            <div class="stack subtext" style="text-align: right;">
+              <span id="pvLocation">Location</span>
+              <span id="pvContact">contact</span>
+              <span id="pvPortfolio" class="muted"></span>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div>
+              <div class="section-title">Summary</div>
+              <p id="pvSummary" class="muted">Summary goes here.</p>
+            </div>
+
+            <div>
+              <div class="section-title">Skills</div>
+              <div class="chip-row" id="pvSkills"></div>
+            </div>
+
+            <div>
+              <div class="section-title">Experience</div>
+              <div class="list" id="pvExperience"></div>
+            </div>
+
+            <div>
+              <div class="section-title">Portfolio</div>
+              <div class="list" id="pvProjects"></div>
+            </div>
+
+            <div>
+              <div class="section-title">Education</div>
+              <p id="pvEducation" class="muted">Education</p>
+            </div>
+
+            <div>
+              <div class="section-title">ATS Keywords</div>
+              <div class="chip-row" id="pvKeywords"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      (() => {
+        const DRAFT_KEY = 'pulsecv_draft_v1';
+        const qs = (id) => document.getElementById(id);
+        const renderChips = (arr, target) => {
+          if (!target) return;
+          target.innerHTML = '';
+          arr.forEach((val) => {
+            const chip = document.createElement('span');
+            chip.className = 'chip';
+            chip.textContent = val;
+            target.appendChild(chip);
+          });
+        };
+        const renderList = (items, target, formatter) => {
+          if (!target) return;
+          target.innerHTML = '';
+          items.forEach((item) => {
+            const div = document.createElement('div');
+            div.className = 'list-item';
+            div.innerHTML = formatter(item);
+            target.appendChild(div);
+          });
+        };
+        const loadDraft = () => {
+          try {
+            return JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+          } catch {
+            return null;
+          }
+        };
+        const data = loadDraft();
+        if (!data) {
+          alert('No saved draft found. Save a draft in the builder first.');
+          window.location.href = 'dashboard.html';
+          return;
+        }
+        qs('pvName').textContent = data.name || 'Your Name';
+        qs('pvTitle').textContent = data.title || 'Role headline';
+        qs('pvLocation').textContent = data.location || 'Location';
+        qs('pvContact').textContent = [data.email, data.phone, data.website].filter(Boolean).join(' | ');
+        qs('pvPortfolio').textContent = data.portfolioUrl ? `Portfolio: ${data.portfolioUrl}` : '';
+        const avatar = qs('pvPhoto');
+        if (avatar && data.photoData) {
+          avatar.style.backgroundImage = `url('${data.photoData}')`;
+        }
+        qs('pvSummary').textContent = data.summary || 'Summary goes here.';
+        qs('pvEducation').textContent = data.education || 'Education';
+        renderChips(data.skills || [], qs('pvSkills'));
+        renderChips(data.keywords || [], qs('pvKeywords'));
+        renderList(
+          data.experiences || [],
+          qs('pvExperience'),
+          (exp) =>
+            `<strong>${exp.title || ''}</strong> | ${exp.company || ''} <span class="subtext">${exp.period || ''}</span><br><span class="muted">${exp.impact || ''}</span>`
+        );
+        renderList(
+          data.projects || [],
+          qs('pvProjects'),
+          (p) =>
+            `<div class="project-meta"><strong>${p.title || ''}</strong>${p.link ? ` | <a href="${p.link}">${p.link}</a>` : ''}</div><p class="muted">${p.outcome || ''}</p><div class="chip-row">${(p.stack || '')
+              .split(',')
+              .map((s) => s.trim())
+              .filter(Boolean)
+              .map((s) => `<span class="tag">${s}</span>`)
+              .join(' ')}</div>`
+        );
+      })();
+    </script>
+  </body>
+</html>

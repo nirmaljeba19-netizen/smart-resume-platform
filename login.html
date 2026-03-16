@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | PulseCV</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav class="navbar non-print">
+      <div class="container nav-shell">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          <a href="index.html">PulseCV</a>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="signup.html">Sign up</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container" style="max-width: 520px; padding: 40px 0 80px;">
+      <div class="panel">
+        <div class="pill">Welcome back</div>
+        <h1>Log in to continue</h1>
+        <p class="muted">Save drafts locally and keep your role profiles consistent.</p>
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">Email</label>
+            <input id="loginEmail" type="email" name="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" name="password" placeholder="••••••••" required />
+          </div>
+          <button class="btn btn-primary" type="submit" style="width: 100%;">Login</button>
+        </form>
+        <div class="divider"></div>
+        <p class="muted">
+          No account?
+          <a href="signup.html">Create one</a>
+          · or ·
+          <a href="dashboard.html">Continue as guest</a>
+        </p>
+        <p class="hint">Authentication is local-only for demo purposes. No data leaves your browser.</p>
+      </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+  </body>
+</html>
